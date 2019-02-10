@@ -1,0 +1,73 @@
+﻿@model IEnumerable<TrackMyMoney.Models.Transaction>
+
+@{
+    ViewBag.Title = "Summary";
+}
+
+<h2>Summary of your transactions</h2><br />
+<p>
+    <a href="@Url.Action("Index","UserAccount")">Summary for Admin</a>
+</p>
+<h4>
+    Current Balance:
+    @if (ViewBag.Balance >= 0)
+    {
+        <span style="color: darkgreen">$@ViewBag.Balance</span>;
+    }
+    else
+    {
+        <span style="color: red"><b>$@ViewBag.Balance</b></span>;
+    }
+</h4><br />
+
+<table class="table">
+    <tr class="bg-info text-white">
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayName("From/To")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.Amount < 0)
+            {
+                <span style="color: red;"><b>-@Html.DisplayFor(modelItem => item.Amount)</b></span>;
+            }
+            else
+            {
+                <span style="color:darkgreen">+@Html.DisplayFor(modelItem => item.Amount)</span>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.From)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            <a href="@Url.Action("Delete", new { id=item.Id })" class="btn btn-danger btn-sm">Remove</a>
+        </td>
+    </tr>
+}
+
+</table>

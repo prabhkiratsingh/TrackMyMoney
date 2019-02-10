@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TrackMyMoney.Models.UserAccount>
+
+@{
+    ViewBag.Title = "Registered Users";
+}
+
+<h2>Registered Users</h2>
+<br />
+<table class="table">
+    <tr class="text-white bg-info">
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Balance)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @if (item.Balance < 0)
+            {
+                <span style="color: red;"><b>-@Html.DisplayFor(modelItem => item.Balance)</b></span>;
+            }
+            else
+            {
+                <span style="color:darkgreen">+@Html.DisplayFor(modelItem => item.Balance)</span>
+            }
+        </td>
+        <td>
+            <a href="@Url.Action("SummaryForAdmin", "Transaction", new { userId = item.Id })" class="btn btn-sm btn-info">Details</a>
+        </td>
+    </tr>
+}
+
+</table>
